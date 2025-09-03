@@ -14,4 +14,3 @@ client.once(Events.ClientReady, readyClient => {
 
 // Log in to Discord with your client's token
 client.login(token);
-This is how you create a client instance f
