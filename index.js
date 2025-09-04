@@ -55,9 +55,9 @@ for (const file of eventFiles) {
 // Create a new REaction Role Manager and use it.
 const reactionRoleConfiguration = [ //TODO: after verifying implement a better store for these
   {
-    messageId: 1413205253272375329,
-    reaction: ":bell:", 
-    roleId: 1413205534995124266,
+    messageId: "1413207664967553217",
+    reaction: ":bell:", //🔔
+    roleId: "1413207500429328538",
   },
 ];
 const manager = new ReactionRole(client, reactionRoleConfiguration);
