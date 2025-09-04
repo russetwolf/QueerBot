@@ -1,14 +1,21 @@
 // Require the necessary discord.js classes
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
 const { token } = require('./config.json');
 
 //reaction-role lib
 const { ReactionRole } = require("discordjs-reaction-role");
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ 
+	partials: [Partials.Message, Partials.Reaction],
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildMessageReactions
+	], 
+});
 
 client.cooldowns = new Collection();
 
@@ -45,5 +52,23 @@ for (const file of eventFiles) {
 	}
 }
 
+// Create a new REaction Role Manager and use it.
+const reactionRoleConfiguration = [ //TODO: after verifying implement a better store for these
+  {
+    messageId: 1413205253272375329,
+    reaction: ":bell:", 
+    roleId: 1413205534995124266,
+  },
+];
+const manager = new ReactionRole(client, reactionRoleConfiguration);
+
 // Log in to Discord with your client's token
 client.login(token);
+
+// Stop the bot when the process is closed (via Ctrl-C).
+const destroy = () => {
+  manager.teardown();
+  client.destroy();
+};
+process.on("SIGINT", destroy);
+process.on("SIGTERM", destroy);
