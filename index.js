@@ -4,6 +4,9 @@ const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
+//reaction-role lib
+const { ReactionRole } = require("discordjs-reaction-role");
+
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
