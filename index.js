@@ -56,7 +56,7 @@ for (const file of eventFiles) {
 const reactionRoleConfiguration = [ //TODO: after verifying implement a better store for these
   {
     messageId: "1413207664967553217",
-    reaction: ":bell:", //🔔
+    reaction: "🔔", //:bell:
     roleId: "1413207500429328538",
   },
 ];
