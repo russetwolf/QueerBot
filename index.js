@@ -1,8 +1,9 @@
 // Require the necessary discord.js classes
 const fs = require('node:fs');
 const path = require('node:path');
+const Sequelize = require('sequelize');
 const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
-const { token } = require('./config.json');
+const { token, reactionRoleConfig } = require('./config.json');
 
 //reaction-role lib
 const { ReactionRole } = require("discordjs-reaction-role");
@@ -15,6 +16,14 @@ const client = new Client({
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.GuildMessageReactions
 	], 
+});
+
+const sequelize = new Sequelize('database', 'user', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false,
+	// SQLite only
+	storage: 'database.sqlite',
 });
 
 client.cooldowns = new Collection();
@@ -39,6 +48,16 @@ for (const folder of commandFolders) {
 	}
 }
 
+client.tables = new Collection();
+const tablesPath = path.join(__dirname, 'tables');
+const tableFiles = fs.readdirSync(tablesPath).filter(file => file.endsWith('.js'));
+
+for (const file of tableFiles) {
+	const filePath = path.join(tablesPath, file);
+	const table = require(filePath);
+	client.tables.set(table.name, sequelize.define(table.name, table.definition));
+}
+
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
@@ -52,15 +71,7 @@ for (const file of eventFiles) {
 	}
 }
 
-// Create a new REaction Role Manager and use it.
-const reactionRoleConfiguration = [ //TODO: after verifying implement a better store for these
-  {
-    messageId: "1413207664967553217",
-    reaction: "🔔", //:bell:
-    roleId: "1413207500429328538",
-  },
-];
-const manager = new ReactionRole(client, reactionRoleConfiguration);
+const manager = new ReactionRole(client, reactionRoleConfig);
 
 // Log in to Discord with your client's token
 client.login(token);
