@@ -7,8 +7,14 @@ module.exports = {
 			type: Sequelize.STRING,
 			unique: true,
 		},
-		month: Sequelize.INTEGER,
-		day: Sequelize.INTEGER,
+		month: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+		},
+		day: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+		},
 		usage_count: {
 			type: Sequelize.INTEGER,
 			defaultValue: 0,
