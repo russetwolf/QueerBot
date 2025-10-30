@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { birthdayChannelId } = require('./config.json');
+const { birthdayChannelId } = require('../config.json');
 
 module.exports = async (client) => {
 	const today = new Date().toLocaleDateString('en-US');
