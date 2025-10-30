@@ -1,4 +1,5 @@
 const { Events } = require('discord.js');
+const {CronJob } = require('cron');
 
 module.exports = {
 	name: Events.ClientReady,
@@ -8,6 +9,16 @@ module.exports = {
 		client.tables.forEach(table => {
 			table.sync();
 		});
-		console.log(`Ready! Logged in as ${client.user.tag}`);
+		const job = new CronJob(
+			'30 12 * * *', // cronTime
+			async function () {
+				await birthdayCheck(client);
+      		}, // onTick
+			null, // onComplete
+			true, // start
+			'America/Toronto' // timeZone
+		);
+
+		console.log(`Ready! Logged in as ${client.user.tag}}`);
 	},
 };
