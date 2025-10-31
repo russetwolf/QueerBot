@@ -1,5 +1,6 @@
 const { Events } = require('discord.js');
 const {CronJob } = require('cron');
+const birthdayCheck = require('./birthdayCheck.js');
 
 module.exports = {
 	name: Events.ClientReady,
@@ -19,6 +20,6 @@ module.exports = {
 			'America/Toronto' // timeZone
 		);
 
-		console.log(`Ready! Logged in as ${client.user.tag}}`);
+		console.log(`Ready! Logged in as ${client.user.tag}`);
 	},
 };

@@ -6,17 +6,18 @@ module.exports = async (client) => {
 	const [month, day] = today.split('/').slice(0, 2);
 	console.log(`Checking for birthdays today: ${month}/${day}`);
 
-	const bTable = interaction.client.tables.get("birthdays");
+	const bTable = client.tables.get("birthdays");
 
 	try {
 		const birthdays = await bTable.findAll({ where: { month: month, day: day } });
+		console.log(`Found ${birthdays.length} birthdays today.`)
 
 		birthdays.forEach(row => {
 			const user = row.get('username');
 			const wishCountIncremented = row.get('usage_count')+1;
 			let lastDigit = wishCountIncremented;
 			let countSuffix;
-			if (wishCountIncremented > 20) { //Will be rond at numbers over 100, but it's unlikely we'll hit those for this usecase.
+			if (wishCountIncremented > 20) { //Will be wrong at numbers over 110, but it's unlikely we'll hit those for this usecase.
 				lastDigit = wishCountIncremented % 10;
 			}
 			switch (lastDigit) {
@@ -33,8 +34,7 @@ module.exports = async (client) => {
 					countSuffix = "th"
 			}
 			const message = `🎉 Happy Birthday, <@${user}>! 🎂 This is my ${wishCountIncremented}${countSuffix} time wishing you that!`;
-			client.channels.cache.get(birthdayChannelId).send(birthdayMessage);
-			
+			client.channels.cache.get(birthdayChannelId).send(message);
 			bTable.update({ usage_count: wishCountIncremented }, { where: {username: user } });
 		})
 	} catch (error) {
