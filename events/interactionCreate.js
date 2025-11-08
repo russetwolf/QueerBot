@@ -5,10 +5,17 @@ module.exports = {
 	async execute(interaction) {
 		if (!interaction.isChatInputCommand()) return;
 
-		const command = interaction.client.commands.get(interaction.commandName);
+		let commandName = interaction.commandName;
+		
+		//Make test-commands (deployed on test server) match originals 
+		if (commandName.startsWith('t-')) {
+			commandName = commandName.substring(2);
+		}
+
+		const command = interaction.client.commands.get(commandName);
 
 		if (!command) {
-			console.error(`No command matching ${interaction.commandName} was found.`);
+			console.error(`No command matching ${commandName} was found.`);
 			return;
 		}
 
