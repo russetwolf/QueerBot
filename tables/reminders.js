@@ -14,7 +14,6 @@ module.exports = {
 		},
 		crontab: {
 			type: Sequelize.STRING,
-			defaultValue: "00 12 * * *",
 			allowNull: false,
 		},
 		message: {

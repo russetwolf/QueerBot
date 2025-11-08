@@ -15,24 +15,25 @@ module.exports = {
 		const user = interaction.user.username;
 		const message = interaction.options.getString('message');
 		const channelId = interaction.channelId;
+		const crontab = interaction.options.getString('crontab') == null ? "00 12 * * *" : interaction.options.getString('crontab');
 
-		const crontab = interaction.options.getString('crontab');
+		let r = {
+				creator_username: user,
+				message: message,
+				channelId: channelId,
+				crontab: crontab,
+			}
+
 		const once = interaction.options.getString('once');
+		if (once != null) r.once = once;
 		const everyother = interaction.options.getString('everyother');
+		if (everyother != null) r.everyother = everyother;
 
 		const table = interaction.client.tables.get("reminders");
 
 		try {
 			//create reminder in db
-			const reminder = await table.create({
-				creator_username: user,
-				message: message,
-				crontab: crontab == null ? "0 12 * * *" : crontab,
-				channelId: channelId,
-				once: once == null ? true : once,
-				everyother: everyother == null ? false : everyother,
-				everyother_send_next_time: true,
-			});
+			const reminder = await table.create(r);
 
 			//create crontab to execute it later
 			const job = new CronJob(
