@@ -8,9 +8,11 @@ module.exports = {
 	once: true,
 	async execute(client) 
 	{
-		client.tables.forEach(table => {
-			table.sync();
+		client.tables.forEach(async table => {
+			await table.sync();
+			console.log(`Sync'd table: ${table.name}`);
 		});
+		console.log(`Sync'd all tables`);
 		
 		const job = new CronJob(
 			'30 12 * * *', // cronTime
@@ -24,6 +26,7 @@ module.exports = {
 
 		// Have to re-set the cronjobs for reminders on restart.
 		const table = client.tables.get("reminders");
+		console.log(`Got table: ${table.name}`);
 		const reminders = await table.findAll();
 		reminders.forEach(reminder => {
 			const job = new CronJob(

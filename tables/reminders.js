@@ -14,7 +14,7 @@ module.exports = {
 		},
 		crontab: {
 			type: Sequelize.STRING,
-			default: "00 12 * * *",
+			defaultValue: "00 12 * * *",
 			allowNull: false,
 		},
 		message: {
@@ -27,17 +27,17 @@ module.exports = {
 		},
 		once: {
 			type: Sequelize.BOOLEAN,
-			default: true,
+			defaultValue: true,
 			allowNull:false,
 		},
 		everyother: {
 			type: Sequelize.BOOLEAN,
-			default: false,
+			defaultValue: false,
 			allowNull:false,
 		},
 		everyother_send_next_time: {
 			type: Sequelize.BOOLEAN,
-			default: true,
+			defaultValue: true,
 		},
 	}
 };
