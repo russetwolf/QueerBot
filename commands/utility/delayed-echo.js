@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
@@ -7,7 +7,10 @@ module.exports = {
 		.addStringOption((option) => option.setName('message').setDescription('The message you want repeated.').setRequired(true))
 		.setDescription('Replies with the message provided, publically, after 30s.'),
 	async execute(interaction) {
-		await sleep(30*1000);
-		await interaction.reply({ content: interaction.options.getString('message') });
+		setTimeout(() => {
+			interaction.client.channels.cache.get(interaction.channelId).send(interaction.options.getString('message'));
+		}, 30*1000);
+		await interaction.reply({ content: 'Waiting...', flags: MessageFlags.Ephemeral });
+		
 	},
 };
