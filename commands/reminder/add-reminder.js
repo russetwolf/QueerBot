@@ -46,7 +46,7 @@ module.exports = {
 				'America/Toronto' // timeZone
 			);
 
-			return interaction.reply(`Reminder added!`);
+			return interaction.reply({content:`Reminder added!`, flags; MessageFlags.Ephemeral});
 		} catch (error) {
 			console.log(error);
 			return interaction.reply(`Something went wrong with adding a reminder: ${error.name}`);
