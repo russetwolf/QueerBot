@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
@@ -13,9 +13,9 @@ module.exports = {
 		const affectedRows = await table.destroy( { where: {id: reminderId } });
 
         if (!affectedRows) {
-            return interaction.reply(`I didn't have a reminder with id ${reminderId} on file. Now I still don't!`);
+            return interaction.reply({ content: `I didn't have a reminder with id ${reminderId} on file. Now I still don't!`, flags: MessageFlags.Ephemeral });
         }
 
-        return interaction.reply(`I deleted the reminder with id ${reminderId}.`);
+        return interaction.reply({ content: `I deleted the reminder with id ${reminderId}.`, flags: MessageFlags.Ephemeral });
 	},
 };

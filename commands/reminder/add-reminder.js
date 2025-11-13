@@ -1,5 +1,6 @@
-const { SlashCommandBuilder } = require('discord.js');
-const {CronJob } = require('cron');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { CronJob } = require('cron');
+const prettyCron = require('prettycron');
 const reminderCheck = require('../../events/reminderCheck.js');
 
 module.exports = {
@@ -46,10 +47,12 @@ module.exports = {
 				'America/Toronto' // timeZone
 			);
 
-			return interaction.reply({content:`Reminder added!`, flags; MessageFlags.Ephemeral});
+			const response = `I'll remind you "${message}" at ${prettyCron.toString(crontab)}${reminder.once ? " (once)" : ""}${reminder.everyother ? " (every other time)" : ""} [id: ${reminder.id}]`;
+
+			return interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
 		} catch (error) {
 			console.log(error);
-			return interaction.reply(`Something went wrong with adding a reminder: ${error.name}`);
+			return interaction.reply({ content: `Something went wrong with adding a reminder: ${error.name}`, flags: MessageFlags.Ephemeral });
 		}
 	},
 };

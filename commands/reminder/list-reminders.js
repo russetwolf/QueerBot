@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const prettyCron = require('prettycron');
 
 module.exports = {
 	cooldown: 5,
@@ -14,14 +15,16 @@ module.exports = {
 			const reminders = await table.findAll();
 
 			reminders.forEach(r => {
-				const line = `id: ${r.id}, creator: ${r.creator_username}, cron: ${r.crontab}, message: ${r.message}, channel: ${r.channelId}, once?: ${r.once}, everyother?: ${r.everyother}, send on next instance?: ${r.everyother_send_next_time}`
-				response += `---\n${line}`
+				let line = `"${r.message}" by ${r.creator_username}\n`;
+				line += `${prettyCron.toString(r.crontab)}${r.once ? " (once)" : ""}${r.everyother ? " (every other time)" : ""}\n`;
+				line += `[id: ${r.id}], channel: ${r.channelId}`;
+				response += `\n---\n${line}`;
 			});
 			
-			return interaction.reply(response);
+			return interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
 		} catch (error) {
 			console.log(error);
-			return interaction.reply(`Something went wrong with getting the reminders list: ${error.name}`);
+			return interaction.reply({ content: `Something went wrong with getting the reminders list: ${error.name}`, flags: MessageFlags.Ephemeral });
 		}
 	},
 };

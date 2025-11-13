@@ -45,9 +45,9 @@ This bot uses a database to store reminder information. Initial implementation u
 
 ## Cron
 
-This bot uses this library as a task scheduler for birthdays and other reminders
+This bot uses the cron library as a task scheduler for birthdays and other reminders. Also prettycron to make it human-readable.
 
-```npm install cron```
+```npm install cron prettycron```
 
 ## Credit where credit is due
 
