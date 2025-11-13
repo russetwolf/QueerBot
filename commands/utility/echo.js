@@ -1,12 +1,12 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('echo')
+		.setName('u-echo')
 		.addStringOption((option) => option.setName('message').setDescription('The message you want repeated.').setRequired(true))
 		.setDescription('Replies with the message provided, publically.'),
 	async execute(interaction) {
-		await interaction.reply({ content: message });
+		await interaction.reply({ content: interaction.options.getString('message') });
 	},
 };
