@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('list-days-since')
+		.setName('u-list-days-since')
 		.setDescription('List the days-since trackers the bot has.'),
 	async execute(interaction) {
 
@@ -23,14 +23,15 @@ module.exports = {
 					table.update({ record: record }, { where: {id: r.id } });
 				}
 
-				const line = `id: ${r.id}, tracker: ${r.tracker_name}, creator: ${r.creator_username}, time since last occurence: ${diffDays} days, record: ${record} days`
-				response += `---\n${line}`
+				let line = `Days since last ${r.tracker_name}: ${diffDays} days\n`;
+				line += `[id: ${r.id}] Record: ${record} days. Creator: ${r.creator_username}`;
+				response += `\n---\n${line}`;
 			});
 			
-			return interaction.reply(response);
+			return interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
 		} catch (error) {
 			console.log(error);
-			return interaction.reply(`Something went wrong with getting the days-since list: ${error.name}`);
+			return interaction.reply({ content: `Something went wrong with getting the days-since list: ${error.name}`, flags: MessageFlags.Ephemeral });
 		}
 	},
 };

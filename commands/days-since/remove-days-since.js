@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('remove-days-since')
+		.setName('u-remove-days-since')
 		.addIntegerOption((option) => option.setName('id').setDescription('The unique ID number of your days-since tracker. Use list-days-sinces to find it.').setRequired(true))
 		.setDescription('Make the bot forget a days-since tracker.'),
 	async execute(interaction) {
@@ -13,9 +13,9 @@ module.exports = {
 		const affectedRows = await table.destroy( { where: {id: daysSinceId } });
 
         if (!affectedRows) {
-            return interaction.reply(`I didn't have a tracker with id ${daysSinceId} on file. Now I still don't!`);
+            return interaction.reply({ content: `I didn't have a tracker with id ${daysSinceId} on file. Now I still don't!`, flags: MessageFlags.Ephemeral });
         }
 
-        return interaction.reply(`I deleted the tracker with id ${days-sinceId}.`);
+        return interaction.reply({ content: `I deleted the tracker with id ${daysSinceId}.`, flags: MessageFlags.Ephemeral });
 	},
 };

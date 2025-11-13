@@ -1,10 +1,9 @@
-const { SlashCommandBuilder } = require('discord.js');
-const {CronJob } = require('cron');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('add-days-since')
+		.setName('u-add-days-since')
 		.addStringOption((option) => option.setName('tracker_name').setDescription('The event you want tracked.').setRequired(true))
 		.setDescription('Add an event for the bot to track days since.'),
 	async execute(interaction) {
@@ -20,10 +19,11 @@ module.exports = {
 				tracker_name: trackerName,
 			});
 
+			//Announce this to everyone, it's half the fun!
 			return interaction.reply(`Now tracking days since last ${trackerName}`);
 		} catch (error) {
 			console.log(error);
-			return interaction.reply(`Something went wrong with adding an event: ${error.name}`);
+			return interaction.reply({content: `Something went wrong with adding an event: ${error.name}`, flags: MessageFlags.Ephemeral});
 		}
 	},
 };

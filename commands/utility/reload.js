@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
@@ -14,7 +14,7 @@ module.exports = {
 		const command = interaction.client.commands.get(commandName);
 
 		if (!command) {
-			return interaction.reply(`There is no command with name \`${commandName}\`!`);
+			return interaction.reply({ content: `There is no command with name \`${commandName}\`!`, flags: MessageFlags.Ephemeral });
 		}
 
         delete require.cache[require.resolve(`./${command.data.name}.js`)];
@@ -25,7 +25,7 @@ module.exports = {
             await interaction.reply(`Command \`${newCommand.data.name}\` was reloaded!`);
         } catch (error) {
             console.error(error);
-            await interaction.reply(`There was an error while reloading a command \`${command.data.name}\`:\n\`${error.message}\``);
+            await interaction.reply({ content: `There was an error while reloading a command \`${command.data.name}\`:\n\`${error.message}\``, flags: MessageFlags.Ephemeral });
         }
 	},
 };

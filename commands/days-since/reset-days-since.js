@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const { NOW } = require('sequelize');
 
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('reset-days-since')
+		.setName('u-reset-days-since')
 		.addIntegerOption((option) => option.setName('id').setDescription('The unique ID number of your days-since tracker. Use list-days-since to find it.').setRequired(true))
 		.setDescription('Make the bot reset a days-since tracker to 0.'),
 	async execute(interaction) {
@@ -26,8 +26,9 @@ module.exports = {
 
 			await table.update({ date_last_occurred: today, record: record }, { where: {id: daysSinceId } });
 
-			return interaction.reply(`Reset days since ${r.tracker_name} to 0, it was ${diffDays}. Record: ${record}`);
+			//Announce this to everyone, it's half the fun!
+			return interaction.reply({ content:`Reset days since ${r.tracker_name} to 0, it was ${diffDays}. Record: ${record}` });
 		}
-        return interaction.reply(`I don't have a tracker with id ${daysSinceId} on file. Please use list-days-since to find your tracker id.`);
+        return interaction.reply({ content: `I don't have a tracker with id ${daysSinceId} on file. Please use list-days-since to find your tracker id.`, flags: MessageFlags.Ephemeral });
 	},
 };
