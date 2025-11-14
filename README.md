@@ -82,3 +82,16 @@ Use `screen` to start a session that will run after your SSH session quits. Key 
 `sudo screen -S QueerBot` to launch a new session, where you can cd into the Queerbot directory and run `node index.js` to start the server.
 
 `Ctrl+A` `Ctrl-D` in quick succession to detetch from the session so you can quit your SSH session.
+
+## Design Challenges
+
+Sometimes this thing goes offline because I accidentally left the test instance running instead, or the session ended because I exited the SSH session and didn't think about it killing the node instance, etc. This makes me want to have a "catch-up" check on startup to go back and do any reminders or birthdays it missed.
+
+I see two main approaches:
+
+1. A "heartbeat" where it checks the last heartbeat and acts on anything that should have triggered betweent the last heartbeat and startup time
+2. Recording last execution time in the database for each reminder and birthday. Checking if any rows should have executed since their last execution. For "once" instances this can be hacked together by checking against "created date", but leaves gaps for repeating instances. 
+
+Either way we need a way to translate a crontab string and a datetime in the past and determine "should this have run in between?"
+
+This is also making me want to refactor the birthdays into a specialized type of reminder instead of a whole separate thing.
