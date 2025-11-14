@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
@@ -17,9 +17,9 @@ module.exports = {
 		const affectedRows = await bTable.update({ month: bMonth, day: bDay }, { where: {username: bUser } });
 
         if (affectedRows > 0 ) {
-            return interaction.reply(`Updated your birthday to ${bMonth}/${bDay}.`);
+            return interaction.reply({content: `Updated your birthday to ${bMonth}/${bDay}.`, flags: MessageFlags.Ephemeral });
         }
 
-        return interaction.reply(`I don't have a birthday on file for you. Try add-birthday.`);
+        return interaction.reply({content: `I don't have a birthday on file for you. Try add-birthday.`, flags: MessageFlags.Ephemeral });
 	},
 };

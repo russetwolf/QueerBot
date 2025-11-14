@@ -65,7 +65,7 @@ SSH into the machine from the GCP Console and `git pull` this repo.
 
 ```apt install node npm```
 
-```npm install discord.js sequelize sqlite3 cron```
+```npm install discord.js sequelize sqlite3 cron prettycron```
 
 Then you can follow below instructions for first deploy.
 

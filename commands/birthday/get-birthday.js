@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
@@ -14,12 +14,12 @@ module.exports = {
 			const birthday = await bTable.findOne({ where: { username: bUser } });
 
             if (birthday) {
-                return interaction.reply(`Your birthday is ${birthday.get('month')}/${birthday.get('day')} and I've wished you a happy one ${birthday.get('usage_count')} times`);
+                return interaction.reply({content: `Your birthday is ${birthday.get('month')}/${birthday.get('day')} and I've wished you a happy one ${birthday.get('usage_count')} times`, flags: MessageFlags.Ephemeral });;
             }
 
-			return interaction.reply(`I don't have a birthday on file for you. Try add-birthday.`);
+			return interaction.reply({content: `I don't have a birthday on file for you. Try add-birthday.`, flags: MessageFlags.Ephemeral });
 		} catch (error) {
-			return interaction.reply(`Something went wrong with getting a birthday: ${error.name}`);
+			return interaction.reply({content: `Something went wrong with getting a birthday: ${error.name}`, flags: MessageFlags.Ephemeral });
 		}
 	},
 };

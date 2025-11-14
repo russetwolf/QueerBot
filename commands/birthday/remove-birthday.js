@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
@@ -12,9 +12,9 @@ module.exports = {
 		const affectedRows = await bTable.destroy( { where: {username: bUser } });
 
         if (!affectedRows) {
-            return interaction.reply(`I didn't have a birthday on file for you. Now I still don't!`);
+            return interaction.reply({content: `I didn't have a birthday on file for you. Now I still don't!`, flags: MessageFlags.Ephemeral });
         }
 
-        return interaction.reply(`I deleted the birthday on file for you.`);
+        return interaction.reply({content: `I deleted the birthday on file for you.`, flags: MessageFlags.Ephemeral });
 	},
 };

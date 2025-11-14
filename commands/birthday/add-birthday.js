@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
@@ -22,13 +22,13 @@ module.exports = {
 				usage_count: 0,
 			});
 
-			return interaction.reply(`Birthday ${birthday.month}/${birthday.day} added for ${birthday.username}.`);
+			return interaction.reply({content: `Birthday ${birthday.month}/${birthday.day} added for ${birthday.username}.`, flags: MessageFlags.Ephemeral });
 		} catch (error) {
 			if (error.name === 'SequelizeUniqueConstraintError') {
-				return interaction.reply('You already have a birthday on file. Try change-birthday command instead.');
+				return interaction.reply({content: 'You already have a birthday on file. Try change-birthday command instead.', flags: MessageFlags.Ephemeral });
 			}
 
-			return interaction.reply(`Something went wrong with adding a birthday: ${error.name}`);
+			return interaction.reply({content: `Something went wrong with adding a birthday: ${error.name}`, flags: MessageFlags.Ephemeral });
 		}
 	},
 };
