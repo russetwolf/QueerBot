@@ -16,7 +16,7 @@ module.exports = {
 		const user = interaction.user.username;
 		const guildId = interaction.guildId;
 
-		const result = await souvenirUndo(guildId, reminderId, user);
+		const result = await souvenirUndo(interaction.client.tables, guildId, reminderId, user);
 
 		if (result.affectedRows == 0) {
             return interaction.reply({ 

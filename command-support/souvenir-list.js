@@ -1,5 +1,5 @@
-module.exports = async (guildId, flags) => {
-	const table = interaction.client.tables.get("souvenirs");
+module.exports = async (tables, guildId, flags) => {
+	const table = tables.get("souvenirs");
 	const reminders = await table.findAll();
 
 	return reminders.filter(r => {

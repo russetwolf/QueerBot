@@ -1,7 +1,7 @@
-const cronStart = require('../../command-support/souvenir-cron-start.js');
+const cronStart = require('./souvenir-cron-start.js');
 
-module.exports = async (guildId, row) => {
-	const table = interaction.client.tables.get("souvenirs");
+module.exports = async (tables, guildId, row) => {
+	const table = tables.get("souvenirs");
 
 	//create reminder in db
 	row.guildId = guildId

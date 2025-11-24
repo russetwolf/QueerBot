@@ -17,7 +17,7 @@ module.exports = {
 		const table = interaction.client.tables.get("souvenirs");
 		const guildId = interaction.guildId;
 
-		const result = await souvenirRemove(guildId, reminderId, user);
+		const result = await souvenirRemove(interaction.client.tables, guildId, reminderId, user);
 
         if (result.affectedRows == 0) {
             return interaction.reply({ 
