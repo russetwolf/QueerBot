@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
-const { CronJob } = require('cron');
 const prettyCron = require('prettycron');
-const souvenirCheck = require('../../events/souvenirCheck.js');
+const souvenirUndo = require('../../command-support/souvenir-add.js');
 
 module.exports = {
 	cooldown: 5,
@@ -16,32 +15,19 @@ module.exports = {
 		const reminderId = interaction.options.getInteger('reminder-id');
 		const user = interaction.user.username;
 		const guildId = interaction.guildId;
-		const table = interaction.client.tables.get("souvenirs");
 
-		const affectedRows = await table.update({ active: true, last_modified_by_username: user }, { where: { id: reminderId, guildId: guildId  } });
-        if (affectedRows == 0) {
+		const result = await souvenirUndo(guildId, reminderId, user);
+
+		if (result.affectedRows == 0) {
             return interaction.reply({ 
 				content: `I didn't have a reminder with id ${reminderId} on file. Now I still don't!`, 
 				flags: MessageFlags.Ephemeral 
 			});
         }
 
-		const r = await table.findOne({ where: { id: reminderId } });
-
+		const r = result.row;
 		let line = `"${r.message}" by ${r.creator_username}\n`;
 						line += `${prettyCron.toString(r.crontab)}${r.once ? " (once)" : ""}${r.everyother ? " (every other time)" : ""}`;
-		
-		//create crontab to execute it later
-		const job = new CronJob(
-			r.crontab, // cronTime
-			async function () {
-				await souvenirCheck(interaction.client, r.get('id'), job);
-			}, // onTick
-			null, // onComplete
-			true, // start
-			'America/Toronto' // timeZone
-		);
-
         return interaction.reply({ 
 			content: `I un-deleted the below reminder with id ${reminderId}.\n---\n${line}`, 
 			flags: MessageFlags.Ephemeral 

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const { CronJob } = require('cron');
 const prettyCron = require('prettycron');
-const souvenirCheck = require('../../events/souvenirCheck.js');
+const souvenirAdd = require('../../command-support/souvenir-add.js');
 
 module.exports = {
 	cooldown: 5,
@@ -32,7 +32,6 @@ module.exports = {
 				creator_username: user,
 				message: message,
 				channelId: channelId,
-				guildId: guildId,
 				crontab: crontab,
 			}
 
@@ -41,24 +40,11 @@ module.exports = {
 		const everyother = interaction.options.getString('everyother');
 		if (everyother != null) r.everyother = everyother;
 
-		const table = interaction.client.tables.get("souvenirs");
 
 		try {
-			//create reminder in db
-			const reminder = await table.create(r);
+			const reminderId = await souvenirAdd(guildId, r);
 
-			//create crontab to execute it later
-			const job = new CronJob(
-				crontab, // cronTime
-				async function () {
-					await souvenirCheck(interaction.client, reminder.get('id'), job);
-				}, // onTick
-				null, // onComplete
-				true, // start
-				'America/Toronto' // timeZone
-			);
-
-			const response = `I'll remind you "${message}" at ${prettyCron.toString(crontab)}${reminder.once ? " (once)" : ""}${reminder.everyother ? " (every other time)" : ""} [id: ${reminder.id}]`;
+			const response = `I'll remind you "${message}" at ${prettyCron.toString(crontab)}${r.once ? " (once)" : ""}${r.everyother ? " (every other time)" : ""} [id: ${reminderId}]`;
 
 			return interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
 		} catch (error) {

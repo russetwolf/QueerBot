@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const prettyCron = require('prettycron');
+const souvenirList = require('../../command-support/souvenir-list.js');
 
 module.exports = {
 	cooldown: 5,
@@ -7,25 +8,17 @@ module.exports = {
 		.setName('reminder-list')
 		.setDescription('List the reminders the bot has.'),
 	async execute(interaction) {
-		const guildId = interaction.guildId;
-
-
-		const table = interaction.client.tables.get("souvenirs");
 		let response = "Currently active reminders:\n";
 
 		try {
-			const reminders = await table.findAll();
-			console.log(`----\n${reminders}\n----`);
+			const reminders = await souvenirList(interaction.guildId, [{ key: "active", value: true },{ key: "isBirthday", value: false }]);
 
-			reminders.filter(r => {
-					return r.active && !r.isBirthday && r.guildId == guildId;
-				})
-				.forEach(r => {
-					let line = `"${r.message}" by ${r.creator_username}\n`;
-					line += `${prettyCron.toString(r.crontab)}${r.once ? " (once)" : ""}${r.everyother ? " (every other time)" : ""}\n`;
-					line += `[id: ${r.id}], channel: ${r.channelId}`;
-					response += `\n---\n${line}`;
-				});
+			reminders.forEach(r => {
+				let line = `"${r.message}" by ${r.creator_username}\n`;
+				line += `${prettyCron.toString(r.crontab)}${r.once ? " (once)" : ""}${r.everyother ? " (every other time)" : ""}\n`;
+				line += `[id: ${r.id}], channel: ${r.channelId}`;
+				response += `\n---\n${line}`;
+			});
 			
 			return interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
 		} catch (error) {

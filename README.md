@@ -111,12 +111,13 @@ This is also making me want to refactor the birthdays into a specialized type of
 
 ## To Do
  1. 
-     a. Modularlize Souvenir functionality to accomodate Birthdays as a special case
+     a. DONE: Modularlize Souvenir functionality to accomodate Birthdays as a special case
 
      b. Convert Birthday functionality to Souvenirs.
 
  2. Add above "catch-up" function
  2. Add "snooze" function to reminders
+ 3. Look into sub-commands to better group commands
  3. Add Birthday wish randomization
  4. Add some automated testing to this repo
  5. Move role assignemnt stuff into DB instead of `config.json` and maybe add ability ot have the bot create the message and store the config for it
