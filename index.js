@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const Sequelize = require('sequelize');
 const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
-const { token, reactionRoleConfig } = require('./config.json');
+const { reactionRoleConfig } = require('./config.json');
 
 //reaction-role lib
 const { ReactionRole } = require("discordjs-reaction-role");
@@ -74,7 +74,7 @@ for (const file of eventFiles) {
 const manager = new ReactionRole(client, reactionRoleConfig);
 
 // Log in to Discord with your client's token
-client.login(token);
+client.login(process.env.TOKEN);
 
 // Stop the bot when the process is closed (via Ctrl-C).
 const destroy = () => {

@@ -7,18 +7,21 @@ The script to deploy commands to your test server prepends the commands with 't-
 # Setup
 
 Follow instructions in the DiscordJS guide.
-Notably, create a `config.json` file with the following (it is `gitignore`'d):
+Notably, create a `prod.env` file (it is `gitignore`'d) with the following:
 
 ```
-{
-	"token": "your-token-goes-here",
-	"clientId": "your-application-id-goes-here",
-	"guildId": "your-private-testing-server-id-goes-here"
-	"birthdayChannelId": "channel-that-you-want-birthday-notifications-in",
-	"reactionRoleConfig": [
-		...
-	]
-}
+TOKEN="your-token-goes-here"
+CLIENT_ID="your-application-id-goes-here"
+BIRTHDAY_CHANNEL_ID="channel-that-you-want-birthday-notifications-in"
+```
+
+For ease of development/testing if you're doing any, you'll also need to create a second application and create a `test.env` file that has it's specific details:
+
+```
+TOKEN="your-TESTING-token-goes-here"
+CLIENT_ID="your-TESTING-application-id-goes-here"
+GUILD_ID="your-private-testing-server-id-goes-here"
+BIRTHDAY_CHANNEL_ID="channel-that-you-want-birthday-notifications-in-your-TESTING-server"
 ```
 
 # Dependencies
@@ -26,7 +29,7 @@ Notably, create a `config.json` file with the following (it is `gitignore`'d):
 ## discordjs-rection-role
 This project leverages [discordjs-reaction-role](https://github.com/makigas/discordjs-reaction-role) for the role-react functionality commonly seen in Discord Bots.
 **Be sure to set your bot role to the top of the hierarchy so it can manage roles for all members.**
-For now the reaction role JSON is also stored in the `config.json`:
+For now the reaction role JSON is stored in the `config.json` file like so:
 ```
 "reactionRoleConfig": [
 		{
@@ -73,13 +76,15 @@ Then you can follow below instructions for first deploy.
 
 Once you `git push` your changes, SSH into the VM from GCP Console, and `git pull` the new code.
 
+Get your `prod.env` file on the server too, however you want. I leave this as an exercise to the reader.
+
 Use `screen` to start a session that will run after your SSH session quits. Key commands:
 
 `sudo screen -list` will list all the detatched sessions, with id numbers.
 
 `sudo screen -S [id number] -p 0 -X quit` will kill a given session.
 
-`sudo screen -S QueerBot` to launch a new session, where you can cd into the Queerbot directory and run `node index.js` to start the server.
+`sudo screen -S QueerBot` to launch a new session, where you can cd into the Queerbot directory and run `node --env-file=prod.env index.js` to start the server.
 
 `Ctrl+A` `Ctrl-D` in quick succession to detetch from the session so you can quit your SSH session.
 
