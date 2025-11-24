@@ -24,7 +24,7 @@ BIRTHDAY_CHANNEL_ID="channel-that-you-want-birthday-notifications-in-your-TESTIN
 
 # Dependencies
 
-## discordjs-rection-role
+## discordjs-reaction-role
 This project leverages [discordjs-reaction-role](https://github.com/makigas/discordjs-reaction-role) for the role-react functionality commonly seen in Discord Bots.
 **Be sure to set your bot role to the top of the hierarchy so it can manage roles for all members.**
 For now the reaction role JSON is stored in the `config.json` file like so:
