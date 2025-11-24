@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const { CronJob } = require('cron');
 const prettyCron = require('prettycron');
-const reminderCheck = require('../../events/reminderCheck.js');
+const souvenirCheck = require('../../events/souvenirCheck.js');
 
 module.exports = {
 	cooldown: 5,
@@ -25,7 +25,7 @@ module.exports = {
 		const user = interaction.user.username;
 		const message = interaction.options.getString('message');
 		const channelId = interaction.channelId;
-		const guildId = interaction.interaction.guildID;
+		const guildId = interaction.guildId;
 		const crontab = interaction.options.getString('crontab') == null ? "00 12 * * *" : interaction.options.getString('crontab');
 
 		let r = {
@@ -51,7 +51,7 @@ module.exports = {
 			const job = new CronJob(
 				crontab, // cronTime
 				async function () {
-					await reminderCheck(interaction.client, reminder.get('id'), job);
+					await souvenirCheck(interaction.client, reminder.get('id'), job);
 				}, // onTick
 				null, // onComplete
 				true, // start

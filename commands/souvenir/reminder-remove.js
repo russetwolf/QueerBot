@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const prettyCron = require('prettycron');
 
 module.exports = {
 	cooldown: 5,
@@ -13,11 +14,12 @@ module.exports = {
 		const reminderId = interaction.options.getInteger('reminder-id');
 		const user = interaction.user.username;
 		const table = interaction.client.tables.get("souvenirs");
+		const guildId = interaction.guildId;
 
-		const affectedRows = await table.update({ active: false, last_modified_by_username: user }, { where: { id: reminderId } });
+		const affectedRows = await table.update({ active: false, last_modified_by_username: user }, { where: { id: reminderId, guildId: guildId } });
         if (affectedRows == 0) {
             return interaction.reply({ 
-				content: `I didn't have a reminder with id ${reminderId} on file. Now I still don't!`, 
+				content: `I didn't have a reminder with id ${reminderId} on file for this server. Now I still don't!`, 
 				flags: MessageFlags.Ephemeral 
 			});
         }
@@ -28,7 +30,7 @@ module.exports = {
 						line += `${prettyCron.toString(r.crontab)}${r.once ? " (once)" : ""}${r.everyother ? " (every other time)" : ""}`;
 
         return interaction.reply({ 
-			content: `I deleted the below reminder with id ${reminderId}. If this was a mistake, run \`/reminder-undo [id]\`\n---\n${line}`, 
+			content: `I deactivated the below reminder with id ${reminderId}. If this was a mistake, run \`/reminder-undo [id]\`\n---\n${line}`, 
 			flags: MessageFlags.Ephemeral 
 		});
 	},

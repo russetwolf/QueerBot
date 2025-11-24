@@ -4,16 +4,18 @@ const prettyCron = require('prettycron');
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('list-reminders')
+		.setName('reminder-list')
 		.setDescription('List the reminders the bot has.'),
 	async execute(interaction) {
-		const guildId = interaction.interaction.guildID;
+		const guildId = interaction.guildId;
+
 
 		const table = interaction.client.tables.get("souvenirs");
 		let response = "Currently active reminders:\n";
 
 		try {
 			const reminders = await table.findAll();
+			console.log(`----\n${reminders}\n----`);
 
 			reminders.filter(r => {
 					return r.active && !r.isBirthday && r.guildId == guildId;
