@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const prettyCron = require('prettycron');
-const souvenirUndo = require('../../command-support/souvenir-add.js');
+const souvenirUndo = require('../../command-support/souvenir-undo.js');
 
 module.exports = {
 	cooldown: 5,
@@ -16,7 +16,7 @@ module.exports = {
 		const user = interaction.user.username;
 		const guildId = interaction.guildId;
 
-		const result = await souvenirUndo(interaction.client.tables, guildId, reminderId, user);
+		const result = await souvenirUndo(interaction.client, guildId, reminderId, user);
 
 		if (result.affectedRows == 0) {
             return interaction.reply({ 

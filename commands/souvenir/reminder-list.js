@@ -11,7 +11,7 @@ module.exports = {
 		let response = "Currently active reminders:\n";
 
 		try {
-			const reminders = await souvenirList(interaction.client.tables, interaction.guildId, [{ key: "active", value: true },{ key: "isBirthday", value: false }]);
+			const reminders = await souvenirList(interaction.client, interaction.guildId, [{ key: "active", value: true },{ key: "isBirthday", value: false }]);
 
 			reminders.forEach(r => {
 				let line = `"${r.message}" by ${r.creator_username}\n`;

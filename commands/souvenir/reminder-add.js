@@ -42,7 +42,7 @@ module.exports = {
 
 
 		try {
-			const reminderId = await souvenirAdd(interaction.client.tables, guildId, r);
+			const reminderId = await souvenirAdd(interaction.client, guildId, r);
 
 			const response = `I'll remind you "${message}" at ${prettyCron.toString(crontab)}${r.once ? " (once)" : ""}${r.everyother ? " (every other time)" : ""} [id: ${reminderId}]`;
 
