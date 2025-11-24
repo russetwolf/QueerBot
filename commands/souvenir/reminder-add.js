@@ -13,13 +13,13 @@ module.exports = {
 				.setRequired(true))
 		.addStringOption((option) => 
 			option.setName('crontab')
-				.setDescription('When you want it to remind you in CronTab format https://crontab.guru/ Default: tomorrow at noon.'))
+				.setDescription('When? "min hr day# month# weekday#" Default: tomorrow at noon.'))
 		.addStringOption((option) => 
 			option.setName('once')
-				.setDescription('(true/false) Do you want this to be a one-time reminder? Default: true.'))
+				.setDescription('(true/false) Default: true.'))
 		.addStringOption((option) => 
 			option.setName('everyother')
-				.setDescription('(true/false) Do you want this to be every-other instance of your crontab? Default: false.'))
+				.setDescription('(true/false) Default: false.'))
 		.setDescription('Add a reminder the bot.'),
 	async execute(interaction) {
 		const user = interaction.user.username;

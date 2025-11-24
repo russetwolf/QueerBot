@@ -1,5 +1,4 @@
 const { Events } = require('discord.js');
-const { birthdayChannelId } = require('../config.json');
 
 module.exports = async (client) => {
 	const today = new Date().toLocaleDateString('en-US');
@@ -34,7 +33,7 @@ module.exports = async (client) => {
 					countSuffix = "th"
 			}
 			const message = `🎉 Happy Birthday, <@${user}>! 🎂 This is my ${wishCountIncremented}${countSuffix} time wishing you that!`;
-			client.channels.cache.get(birthdayChannelId).send(message);
+			client.channels.cache.get(process.env.BIRTHDAY_CHANNEL_ID).send(message);
 			bTable.update({ usage_count: wishCountIncremented }, { where: {username: user } });
 		})
 	} catch (error) {

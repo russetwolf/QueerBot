@@ -9,7 +9,7 @@ module.exports = {
 	async execute(interaction) {
 		const guildId = interaction.interaction.guildID;
 
-		const table = interaction.client.tables.get("reminders");
+		const table = interaction.client.tables.get("souvenirs");
 		let response = "Currently active reminders:\n";
 
 		try {
