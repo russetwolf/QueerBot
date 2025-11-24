@@ -113,7 +113,7 @@ This is also making me want to refactor the birthdays into a specialized type of
  1. 
      a. DONE: Modularlize Souvenir functionality to accomodate Birthdays as a special case
 
-     b. Convert Birthday functionality to Souvenirs.
+     b. DONE: Convert Birthday functionality to Souvenirs.
 
  2. Add above "catch-up" function
  2. Add "snooze" function to reminders
