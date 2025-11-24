@@ -14,7 +14,6 @@ module.exports = {
 	async execute(interaction) {
 		const reminderId = interaction.options.getInteger('reminder-id');
 		const user = interaction.user.username;
-		const table = interaction.client.tables.get("souvenirs");
 		const guildId = interaction.guildId;
 
 		const result = await souvenirRemove(interaction.client, guildId, reminderId, user);
