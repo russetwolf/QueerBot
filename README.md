@@ -60,7 +60,7 @@ I chose to deploy on GCP free tier. Here are some notes on how I deploy and run 
 
 ## Setup
 
-Log into GCP with your Google account, create a new project, and create a new Clour Engine VM instance.
+Log into GCP with your Google account, create a new project, and create a new Cloud Engine VM instance.
 
 SSH into the machine from the GCP Console and `git pull` this repo.
 
@@ -90,13 +90,13 @@ Run `node --env-file=prod.env index.js` to start the server.
 
 `Ctrl+A` and `Ctrl-D` in quick succession to detetch from the session so you can quit your SSH session.
 
-## Development and local testing
+# Development and local testing
 
 Run `node --env-file=test.env test-deploy-commands.js` to deploy new slash commands to Discord.
 
 Run `node --env-file=test.env index.js` to start the test bot that only runs in your private server.
 
-## Design Challenges
+# Design Challenges
 
 Sometimes this thing goes offline because I accidentally left the test instance running instead, or the session ended because I exited the SSH session and didn't think about it killing the node instance, etc. This makes me want to have a "catch-up" check on startup to go back and do any reminders or birthdays it missed.
 
@@ -109,7 +109,7 @@ Either way we need a way to translate a crontab string and a datetime in the pas
 
 This is also making me want to refactor the birthdays into a specialized type of reminder instead of a whole separate thing.
 
-## To Do
+# To Do
  1. 
      a. Modularlize Souvenir functionality to accomodate Birthdays as a special case
 
