@@ -82,9 +82,19 @@ Use `screen` to start a session that will run after your SSH session quits. Key 
 
 `sudo screen -S [id number] -p 0 -X quit` will kill a given session.
 
-`sudo screen -S QueerBot` to launch a new session, where you can cd into the Queerbot directory and run `node --env-file=prod.env index.js` to start the server.
+`sudo screen -S QueerBot` to launch a new session, where you can cd into the Queerbot directory.
 
-`Ctrl+A` `Ctrl-D` in quick succession to detetch from the session so you can quit your SSH session.
+Run `node --env-file=prod.env prod-deploy-commands.js` to deploy new slash commands to Discord.
+
+Run `node --env-file=prod.env index.js` to start the server.
+
+`Ctrl+A` and `Ctrl-D` in quick succession to detetch from the session so you can quit your SSH session.
+
+## Development and local testing
+
+Run `node --env-file=test.env test-deploy-commands.js` to deploy new slash commands to Discord.
+
+Run `node --env-file=test.env index.js` to start the test bot that only runs in your private server.
 
 ## Design Challenges
 
@@ -98,3 +108,13 @@ I see two main approaches:
 Either way we need a way to translate a crontab string and a datetime in the past and determine "should this have run in between?"
 
 This is also making me want to refactor the birthdays into a specialized type of reminder instead of a whole separate thing.
+
+## To Do
+ 1. 
+ a. Modularlize Souvenir functionality to accomodate Birthdays as a special case
+ b. Convert Birthday functionality to Souvenirs.
+ 2. Add above "catch-up" function
+ 2. Add "snooze" function to reminders
+ 3. Add Birthday wish randomization
+ 4. Add some automated testing to this repo
+ 5. Move role assignemnt stuff into DB instead of `config.json` and maybe add ability ot have the bot create the message and store the config for it
