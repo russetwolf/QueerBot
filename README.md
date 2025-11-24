@@ -120,3 +120,4 @@ This is also making me want to refactor the birthdays into a specialized type of
  3. Add Birthday wish randomization
  4. Add some automated testing to this repo
  5. Move role assignemnt stuff into DB instead of `config.json` and maybe add ability ot have the bot create the message and store the config for it
+ 6. Set up GitHub actions to deploy to GCP when merging to main (and main branch protections)
