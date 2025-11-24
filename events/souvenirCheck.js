@@ -1,13 +1,13 @@
 const { Events } = require('discord.js');
-const {CronJob } = require('cron');
+const { CronJob } = require('cron');
 
-module.exports = async (client, reminderId, job) => {
-	console.log(`Running reminder with id ${reminderId}`);
+module.exports = async (client, id, job) => {
+	console.log(`Running souvenir with id ${id}`);
 
 	const table = client.tables.get("souvenirs");
 
 	try {
-		const reminders = await table.findAll({ where: { id: reminderId, active: true } });
+		const reminders = await table.findAll({ where: { id: id, active: true } });
 		console.log(`Found ${reminders.length} reminder.`)
 		if (reminders.length == 0) {
 			job.stop();
@@ -20,13 +20,13 @@ module.exports = async (client, reminderId, job) => {
 			const everyother = row.get('everyother');
 
 			if (once) {
-				const affectedRows = await table.update({ active: false }, { where: { id: reminderId } });
+				await table.update({ active: false }, { where: { id: id } });
 			}
 			else if (everyother) {
 				const shouldSend = row.get('everyother_send_next_time');
 				try {
 					//invert the bool for next time
-					table.update({ everyother_send_next_time: !shouldSend }, { where: { id: reminderId  } });
+					table.update({ everyother_send_next_time: !shouldSend }, { where: { id: id  } });
 				} catch (error) {
 					console.error(`Error processing everyother reminder: ${error}`);
 				}
@@ -38,7 +38,7 @@ module.exports = async (client, reminderId, job) => {
 			}
 
 			//send the reminder
-			client.channels.cache.get(channelId).send(`${message} [reminder id: ${row.id} by ${row.creator_username}]`);
+			client.channels.cache.get(channelId).send(`${message} ${row.isBirthday ? "": `[reminder id: ${row.id} by ${row.creator_username}]`}`);
 		})
 	} catch (error) {
 		console.error(`Error getting reminders: ${error}`);

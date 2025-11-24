@@ -21,7 +21,7 @@ module.exports = {
 
 		await souvenirRemove(interaction.client, guildId, birthdayInfo.souvenir.id, user);
 		return interaction.reply({ 
-			content: `I deactivated the birthday on file for you. If this was a mistake, run \`/reminder-undo ${birthdayInfo.souvenir.id}`, 
+			content: `I deactivated the birthday on file for you. If this was a mistake, run \`/reminder-undo ${birthdayInfo.souvenir.id}\``, 
 			flags: MessageFlags.Ephemeral 
 		});
 	},
