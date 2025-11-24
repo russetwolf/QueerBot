@@ -2,8 +2,6 @@
 
 This is a [DiscordJS](https://discordjs.guide/) bot built via the tutorial initially and then built out to support requested functionality in a local server. No warranties are made, use at your own risk.
 
-The script to deploy commands to your test server prepends the commands with 't-' to indicate which set of commands it is (so you don't see duplcate commands in the test server). The main code handles all commands with 't-' at the start as not having that, so don't write commands starting with 't-' without modifying this system.
-
 # Setup
 
 Follow instructions in the DiscordJS guide.
