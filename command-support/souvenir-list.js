@@ -1,4 +1,5 @@
 module.exports = async (tables, guildId, flags) => {
+	console.log("A");
 	const table = tables.get("souvenirs");
 	const reminders = await table.findAll();
 
