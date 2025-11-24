@@ -12,7 +12,6 @@ module.exports = {
 
 		try {
 			const reminders = await souvenirList(interaction.client.tables, interaction.guildId, [{ key: "active", value: true },{ key: "isBirthday", value: false }]);
-			console.log(reminders.length);
 
 			reminders.forEach(r => {
 				let line = `"${r.message}" by ${r.creator_username}\n`;
