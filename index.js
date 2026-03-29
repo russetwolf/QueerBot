@@ -18,7 +18,7 @@ const client = new Client({
 	], 
 });
 
-const sequelize = new Sequelize('database', 'user', 'password', {
+client.sequelize = new Sequelize('database', 'user', 'password', {
 	host: 'localhost',
 	dialect: 'sqlite',
 	logging: false,
@@ -55,7 +55,7 @@ const tableFiles = fs.readdirSync(tablesPath).filter(file => file.endsWith('.js'
 for (const file of tableFiles) {
 	const filePath = path.join(tablesPath, file);
 	const table = require(filePath);
-	client.tables.set(table.name, sequelize.define(table.name, table.definition));
+	client.tables.set(table.name, client.sequelize.define(table.name, table.definition));
 }
 
 const eventsPath = path.join(__dirname, 'events');

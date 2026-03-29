@@ -1,17 +1,19 @@
 const { Events } = require('discord.js');
 const {CronJob } = require('cron');
 const souvenirCheck = require('./souvenirCheck.js');
+const { Sequelize } = require('sequelize');
 
 module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) 
 	{
-		client.tables.forEach(async table => {
-			await table.sync();
+		await client.tables.forEach( table => {
+			table.sync();
 			console.log(`Sync'd table: ${table.name}`);
 		});
 		console.log(`Sync'd all tables`);
+		await client.sequelize.sync();
 
 		// Have to re-set the cronjobs for souvenirs on restart.
 		const souvenirTable = client.tables.get("souvenirs");

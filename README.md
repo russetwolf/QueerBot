@@ -64,6 +64,8 @@ Log into GCP with your Google account, create a new project, and create a new Cl
 
 SSH into the machine from the GCP Console and `git pull` this repo.
 
+Make sure you are using a Node version above `20.6.0` for the env file flag used in this setup.
+
 ```apt install node npm```
 
 ```npm install discord.js sequelize sqlite3 cron prettycron```
@@ -112,7 +114,6 @@ This is also making me want to refactor the birthdays into a specialized type of
 # To Do
  1. 
      a. DONE: Modularlize Souvenir functionality to accomodate Birthdays as a special case
-
      b. DONE: Convert Birthday functionality to Souvenirs.
 
  2. Add above "catch-up" function
