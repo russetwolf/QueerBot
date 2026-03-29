@@ -3,7 +3,7 @@ const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('u-add-days-since')
+		.setName('add-days-since')
 		.addStringOption((option) => option.setName('tracker_name').setDescription('The event you want tracked.').setRequired(true))
 		.setDescription('Add an event for the bot to track days since.'),
 	async execute(interaction) {

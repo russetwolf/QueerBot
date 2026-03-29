@@ -4,7 +4,7 @@ const { NOW } = require('sequelize');
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('u-reset-days-since')
+		.setName('reset-days-since')
 		.addIntegerOption((option) => option.setName('id').setDescription('The unique ID number of your days-since tracker. Use list-days-since to find it.').setRequired(true))
 		.setDescription('Make the bot reset a days-since tracker to 0.'),
 	async execute(interaction) {

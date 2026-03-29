@@ -3,7 +3,7 @@ const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('u-remove-days-since')
+		.setName('remove-days-since')
 		.addIntegerOption((option) => option.setName('id').setDescription('The unique ID number of your days-since tracker. Use list-days-sinces to find it.').setRequired(true))
 		.setDescription('Make the bot forget a days-since tracker.'),
 	async execute(interaction) {

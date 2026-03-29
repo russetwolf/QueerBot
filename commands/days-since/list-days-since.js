@@ -3,7 +3,7 @@ const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
-		.setName('u-list-days-since')
+		.setName('list-days-since')
 		.setDescription('List the days-since trackers the bot has.'),
 	async execute(interaction) {
 
