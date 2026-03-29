@@ -44,12 +44,12 @@ module.exports = {
 		try {
 			const reminderId = await souvenirAdd(interaction.client, guildId, r);
 
-			const response = `I'll remind you "${message}" at ${prettyCron.toString(crontab)}${r.repeat ? "" : " (once)"}${r.everyother ? " (every other time)" : ""} [id: ${reminderId}]`;
+			const response = `I'll remind you "${message}" at ${prettyCron.toString(crontab)}${r.repeat==="true" ? "" : " (once)"}${r.everyother==="true" ? " (every other time)" : ""} [id: ${reminderId}]`;
 
 			return interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
 		} catch (error) {
 			console.log(error);
-			return interaction.reply({ content: `Something went wrong with adding a reminder: ${error.name}`, flags: MessageFlags.Ephemeral });
+			return interaction.reply({ content: `Something went wrong with adding a reminder: ${error.name}`});//, flags: MessageFlags.Ephemeral });
 		}
 	},
 };
