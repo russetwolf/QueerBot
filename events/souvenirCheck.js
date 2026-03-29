@@ -16,10 +16,11 @@ module.exports = async (client, id, job) => {
 		reminders.forEach(async row => {
 			const message = row.get('message');
 			const channelId = row.get('channelId');
-			const once = row.get('once');
+			const once = row.get('once'); //to be deprecated
+			const repeat = row.get('repeat'); //new version
 			const everyother = row.get('everyother');
 
-			if (once) {
+			if (once && !repeat) { //if the old and new agree
 				await table.update({ active: false }, { where: { id: id } });
 			}
 			else if (everyother) {

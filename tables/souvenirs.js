@@ -33,6 +33,11 @@ module.exports = {
 			defaultValue: true,
 			allowNull:false,
 		},
+		repeat: {
+			type: Sequelize.BOOLEAN,
+			defaultValue: false,
+			allowNull:false,
+		},
 		everyother: {
 			type: Sequelize.BOOLEAN,
 			defaultValue: false,

@@ -15,8 +15,8 @@ module.exports = {
 			option.setName('crontab')
 				.setDescription('When? "min hr day# month# weekday#" Default: tomorrow at noon.'))
 		.addStringOption((option) => 
-			option.setName('once')
-				.setDescription('(true/false) Default: true.'))
+			option.setName('repeat')
+				.setDescription('(true/false) Default: false.'))
 		.addStringOption((option) => 
 			option.setName('everyother')
 				.setDescription('(true/false) Default: false.'))
@@ -35,8 +35,8 @@ module.exports = {
 				crontab: crontab,
 			}
 
-		const once = interaction.options.getString('once');
-		if (once != null) r.once = once;
+		const repeat = interaction.options.getString('repeat');
+		if (repeat != null) r.repeat = repeat;
 		const everyother = interaction.options.getString('everyother');
 		if (everyother != null) r.everyother = everyother;
 
@@ -44,7 +44,7 @@ module.exports = {
 		try {
 			const reminderId = await souvenirAdd(interaction.client, guildId, r);
 
-			const response = `I'll remind you "${message}" at ${prettyCron.toString(crontab)}${r.once ? " (once)" : ""}${r.everyother ? " (every other time)" : ""} [id: ${reminderId}]`;
+			const response = `I'll remind you "${message}" at ${prettyCron.toString(crontab)}${r.repeat ? "" : " (once)"}${r.everyother ? " (every other time)" : ""} [id: ${reminderId}]`;
 
 			return interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
 		} catch (error) {
