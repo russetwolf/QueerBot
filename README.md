@@ -100,7 +100,7 @@ Run `node --env-file=test.env index.js` to start the test bot that only runs in 
 
 # Design Challenges
 
-Sometimes this thing goes offline because I accidentally left the test instance running instead, or the session ended because I exited the SSH session and didn't think about it killing the node instance, etc. This makes me want to have a "catch-up" check on startup to go back and do any reminders or birthdays it missed.
+Sometimes this thing goes offline for any number of reasons. This makes me want to have a "catch-up" check on startup to go back and do any reminders or birthdays it missed.
 
 I see two main approaches:
 
