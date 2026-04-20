@@ -37,6 +37,9 @@ For now the reaction role JSON is stored in the `config.json` file like so:
 		}
 	]
 ```
+Don't forget:
+
+``` npm install discordjs-reaction-role```
 
 ## Sequelize
 
